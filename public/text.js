@@ -1,6 +1,5 @@
-const text = (()=> {
+const text = ((reader)=> {
   const element = document.querySelector('#text')
-  const reader = new FileReader();
   reader.onload = function (e) {
     element.innerText = e.target.result
   }
@@ -15,4 +14,4 @@ const text = (()=> {
       file_object = file
     }
   };
-})()
+})(new FileReader())
