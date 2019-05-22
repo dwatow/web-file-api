@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    img {
+      width: 200px;
+      height: auto;
+    }
+    button {
+      display: block;
+    }
+  </style>
+  <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <section>
+    <h1>File API</h1>
+    <h2>select a file</h2>
+    <p>declare File in FileList</p>
+    <pre><code class="html">
+&lt;form method="post" action="upload" name="myForm" enctype="multipart/form-data"&gt;
+  &lt;input type="file" name="myUploadFile" /&gt;
+&lt;/form&gt;
+    </code></pre>
+    <form method="post" action="upload" name="myForm" enctype="multipart/form-data">
+      <input type="text" name="filename" value="API_test.md"/>
+      <input type="file" name="myUploadFile" />
+      <input type="submit" name="submit" value="submit">
+    </form>
+    <!-- <textarea id="response" name="response" rows="8" cols="80"></textarea> -->
+  </section>
+  <section>
+    <h2>show as image</h2>
+    <p>File -> Blob url -> image</p>
+    <pre><code class="html">
+&lt;img id="image" src="" alt="" /&gt;
+    </code></pre>
+    <pre><code class="javascript">
+const inputFile = document.myForm.myUploadFile;
+const img = document.querySelector('#image');
+
+const oneFile = inputFile.files.item(0);
+blob_url = URL.createObjectURL(oneFile);
+img.src = blob_url;
+  </code></pre>
+    <button id="showImgButton" type="button" name="button">File to image</button>
+    <img id="image" src="" alt="">
+  </section>
+  <section>
+    <h2>show as canvas</h2>
+    <p>image -> canvas</p>
+    <pre><code class="html">
+&lt;canvas id="canvas" width="200" height="10" /&gt;
+    </code></pre>
+    <pre><code class="javascript">
+const img = document.querySelector('#image');
+const canvas = document.querySelector('#canvas');
+canvas.width = img.width,
+canvas.height = img.height
+
+const ctx = canvas.getContext('2d');
+ctx.drawImage(img, 0, 0, img.width, img.height);
+  </code></pre>
+    <button id="showCanvasButton" type="button" name="button">img to canvas</button>
+    <canvas id="canvas" width="200" height="10" />
+  </section>
+  <section>
+    <h2>canvas as Base64</h2>
+    <p>canvas -> base64</p>
+    <pre><code class="html">
+&lt;textarea id="base64" name="name" rows="8" cols="80"&gt;&lt;/textarea&gt;
+    </code></pre>
+    <pre><code class="javascript">
+const canvas = document.querySelector('#canvas');
+// const ctx = canvas.getContext('2d');
+// ctx.drawImage(img, 0, 0, img.width, img.height);
+
+const base64 = document.querySelector('#base64');
+base64.value = canvas.toDataURL('image/jpeg')
+  </code></pre>
+    <button id="showBase64Button" type="button" name="button">canvas to base64</button>
+    <textarea id="base64" name="name" rows="8" cols="80"></textarea>
+  </section>
+  <section>
+    <h2>show as text</h2>
+    <p>File -> FileReader -> context</p>
+    <pre><code class="html">
+&lt;textarea id="text" name="name" rows="8" cols="80"&gt;&lt;/textarea&gt;
+    </code></pre>
+    <pre><code class="javascript">
+const text = document.querySelector('#text');
+const reader = new FileReader();
+reader.onload = function (e) {
+  text.innerText = e.target.result
+}
+
+const inputFile = document.myForm.myUploadFile;
+const oneFile = inputFile.files.item(0);
+blobUrl = URL.createObjectURL(oneFile);
+reader.readAsText(blobUrl, "UTF-8")
+  </code></pre>
+    <button id="showTextButton" type="button" name="button">File as text</button>
+    <textarea id="text" name="name" rows="8" cols="80"></textarea>
+  </section>
+  <script src="./uploadFile.js" charset="utf-8"></script>
+  <script src="./image.js" charset="utf-8"></script>
+  <script src="./text.js" charset="utf-8"></script>
+  <script src="./canvas.js" charset="utf-8"></script>
+  <script src="./base64.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    const showImgButton = document.querySelector('#showImgButton')
+    showImgButton.addEventListener('click', (e) => {
+      image.setSrc(uploadFile);
+    })
+
+    const showCanvasButton = document.querySelector('#showCanvasButton')
+    showCanvasButton.addEventListener('click', (e) => {
+      canvas.draw(image)
+    })
+
+    const showBase64Button = document.querySelector('#showBase64Button')
+    showBase64Button.addEventListener('click', (e) => {
+      base64.text(canvas.toBase64())
+    })
+
+    const showTextButton = document.querySelector('#showTextButton')
+    showTextButton.addEventListener('click', (e) => {
+      text.open(uploadFile);
+    })
+
+  </script>
+</body>
+</html>
