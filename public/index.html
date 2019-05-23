@@ -109,11 +109,33 @@ reader.readAsText(blobUrl, "UTF-8")
     <button id="showTextButton" type="button" name="button">File as text</button>
     <textarea id="text" name="name" rows="8" cols="80"></textarea>
   </section>
+  <section>
+    <h2>show as binary</h2>
+    <p>File -> FileReader -> binaryString</p>
+    <pre><code class="html">
+&lt;textarea id="binaryString" name="name" rows="8" cols="80"&gt;&lt;/textarea&gt;
+    </code></pre>
+    <pre><code class="javascript">
+const binaryString = document.querySelector('#binaryString');
+const reader = new FileReader();
+reader.onload = function (e) {
+  binaryString.innerText = JSON.stringify((new Uint8Array(e.target.result)).join(', '))
+}
+
+const inputFile = document.myForm.myUploadFile;
+const oneFile = inputFile.files.item(0);
+blobUrl = URL.createObjectURL(oneFile);
+reader.readAsArrayBuffer(blobUrl)
+  </code></pre>
+    <button id="showBinaryStringButton" type="button" name="button">File as binaryString</button>
+    <p id="binaryString"></p>
+  </section>
   <script src="./uploadFile.js" charset="utf-8"></script>
   <script src="./image.js" charset="utf-8"></script>
   <script src="./text.js" charset="utf-8"></script>
   <script src="./canvas.js" charset="utf-8"></script>
   <script src="./base64.js" charset="utf-8"></script>
+  <script src="./binaryString.js" charset="utf-8"></script>
   <script src="./main.js" charset="utf-8"></script>
 </body>
 </html>
