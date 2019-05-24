@@ -30,7 +30,7 @@
     console.log(e.target);
     e.target.href = uploadFile.getBlobUrl()
     e.target.target = '_blank';
-    e.target.download = 'new_' + uploadFile.name();
+    e.target.download = 'new_' + uploadFile.filename();
   })
 
   const downloadFileButton = document.querySelector('#downloadFileButton')
@@ -38,7 +38,7 @@
     const anchor = document.createElement('a')
     anchor.href = uploadFile.getBlobUrl()
     anchor.target = '_blank';
-    anchor.download = 'new_' + uploadFile.name();
+    anchor.download = 'new_' + uploadFile.filename();
     anchor.click()
   })
 

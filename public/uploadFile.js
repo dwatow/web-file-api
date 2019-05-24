@@ -5,6 +5,7 @@ const uploadFile = (()=> {
     element,
     getFile: function () {
       return element.files.item(0)
+      console.log(element.files.item(0));
     },
     getBlobUrl: function () {
       if (!blob_url) {
@@ -18,9 +19,10 @@ const uploadFile = (()=> {
       URL.revokeObjectURL(blob_url)
       element.value = null
     },
-    name: function () {
+    filename: function () {
       const oneFile = element.files.item(0);
-      return oneFile.filename
+      console.log(element.files.item(0));
+      return oneFile.name
     }
   };
 })()

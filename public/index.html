@@ -30,19 +30,24 @@
 &lt;/form&gt;
     </code></pre>
     <form method="post" action="upload" name="myForm" enctype="multipart/form-data">
-      <input type="text" name="filename" value="API_test.md"/>
-      <input type="file" name="myUploadFile" />
-      <input type="submit" name="submit" value="submit">
+      <div><label for="filename">text: </label><input id="filename" type="text" name="filename" value="test text"/></div>
+      <div><label for="file">file: </label><input id="file" type="file" name="myUploadFile" /></div>
+      <div><input type="submit" name="submit" value="submit"></div>
     </form>
+    <p>if you wish try submit, you must be cloned this project, and read usage section in readme.md file</p>
+    <!-- <textarea id="response" name="response" rows="8" cols="80"></textarea> -->
+  </section>
+
+  <section>
+    <h2>Download File from frontend, not backend</h2>
+    File -> download
 
     <p>download file by the input</p>
     <a id="downloadFileAnchor" href="##">download File</a>
     <p>maybe you wish using the button</p>
     <button id="downloadFileButton" type="button" name="button">download File</button>
-
-
-    <!-- <textarea id="response" name="response" rows="8" cols="80"></textarea> -->
   </section>
+
   <section>
     <h2>show as image</h2>
     <p>File -> Blob url -> image</p>
