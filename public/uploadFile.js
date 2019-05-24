@@ -17,6 +17,10 @@ const uploadFile = (()=> {
     clear: function () {
       URL.revokeObjectURL(blob_url)
       element.value = null
+    },
+    name: function () {
+      const oneFile = element.files.item(0);
+      return oneFile.filename
     }
   };
 })()
