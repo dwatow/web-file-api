@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>File API</title>
   <style media="screen">
     img {
       width: 200px;
@@ -18,6 +18,7 @@
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
   <section>
@@ -31,6 +32,7 @@
     </code></pre>
     <form method="post" action="upload" name="myForm" enctype="multipart/form-data">
       <div><label for="filename">text: </label><input id="filename" type="text" name="filename" value="test text"/></div>
+      <div><label for="">charset</label><input type="hidden" id="charset" name="_charset_"></div>
       <div><label for="file">file: </label><input id="file" type="file" name="myUploadFile" /></div>
       <div><input type="submit" name="submit" value="submit"></div>
     </form>
@@ -41,11 +43,32 @@
   <section>
     <h2>Download File from frontend, not backend</h2>
     File -> download
-
+    <pre><code>
+const anchor = document.createElement('a')
+const oneFile = element.files.item(0);
+anchor.href = URL.createObjectURL(oneFile);
+anchor.target = '_blank';
+anchor.download = 'new_' + oneFile.name;
+anchor.click()
+    </code></pre>
     <p>download file by the input</p>
     <a id="downloadFileAnchor" href="##">download File</a>
     <p>maybe you wish using the button</p>
     <button id="downloadFileButton" type="button" name="button">download File</button>
+    <p>if you wish download your file, and your URL is Blob URL. You can use a <code>&lt;a href="blobUrl" &gt;&lt;/a&gt;</code>, and set attribute <code>download</code> for the file name, otherwise, you must be transformed other formats to Blob URL.</p>
+    <h3>send form data by axios (JavaScript)</h3>
+    <pre><code>
+axios({
+  baseURL: location.origin,
+  method: 'POST',
+  headers: {'Content-Type': 'multipart/form-data'},
+  url: '/upload',
+  data: new FormData(document.myForm)
+})
+    </code></pre>
+    <button id="downloadByAxios" type="button" name="button">download by axios</button>
+    <p>using axios in config object, headers set <code>'Content-Type'</code> as <code>'multipart/form-data</code>, must be assign boundary string, ex: <code>boundary=----HiChris</code>, formating of data of config would auto transform to form-data. otherwise, if data is a FormData object, boundary string would auto append on <code>'Content-Type': 'multipart/form-data</code></p>
+    <p>you can see request body by network of debug tool of Chrome</p>
   </section>
 
   <section>

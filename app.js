@@ -20,9 +20,9 @@ app.post('/upload', upload.single('myUploadFile'), (req, res) => {
   field of text: ${req.body.filename}
 
   upload file
-  field of file: ${req.file.fieldname}
-  file name: ${req.file.originalname}
-  file of MIME type: ${req.file.mimetype}
+  field of file: ${req.file && req.file.fieldname}
+  file name: ${req.file && req.file.originalname}
+  file of MIME type: ${req.file && req.file.mimetype}
   `
   console.log(information);
   res.send({

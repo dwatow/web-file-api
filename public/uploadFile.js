@@ -3,6 +3,9 @@ const uploadFile = (()=> {
   let blob_url = ''
   return {
     element,
+    getForm: function () {
+      return document.myForm
+    },
     getFile: function () {
       return element.files.item(0)
       console.log(element.files.item(0));
